@@ -1,0 +1,22 @@
+{
+  "name": "ejs-brunch",
+  "version": "1.0.0",
+  "description": "Adds EJS compilation support to Brunch",
+  "author": "Damián Silvani (@munshkr)",
+  "homepage": "https://github.com/munshkr/ejs-brunch",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:munshkr/ejs-brunch.git"
+  },
+  "scripts": {
+    "test": "node_modules/.bin/eslint index.js && node_modules/.bin/mocha"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "chai": "~3.4.1",
+    "eslint": "^1.10.3",
+    "mocha": "~2.3.4"
+  }
+}
