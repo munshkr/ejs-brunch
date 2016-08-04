@@ -13,12 +13,9 @@ class EjsPlugin {
     let template;
     try {
       template = ejs.compile(file.data);
-    } catch(error) {
-      console.error(error);
-      return Promise.reject(error);
-    } finally {
-      console.log('done');
       return Promise.resolve({template});
+    } catch (error) {
+      return Promise.reject(error);
     }
   }
 }
