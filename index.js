@@ -10,25 +10,21 @@ class EjsPlugin {
   // file: File => Promise[File]
   // Generates a compilation function from a EJS template string
   compile(params) {
-    var data = params.data;
-    var path = params.path;
-
     // TODO Make client configurable
     var options = {
-      client: true,
-      filename: path
+      client: true
     };
 
     try {
       // Generate compile function
-      var fn = ejs.compile(data, options);
+      var fn = ejs.compile(params.data, options);
 
       // Return a callable function which will execute the function
       // created by the source-code, with the passed data as locals
       // Add a local `include` function which uses require to load files
       var returnedFn = function(data) {
-        var include = function(path, includeData) {
-          var _fn = require(path);
+        var include = function(includePath, includeData) {
+          var _fn = require(includePath);
           return _fn(includeData);
         };
         return fn(data, null, include);
