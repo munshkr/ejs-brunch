@@ -1,4 +1,4 @@
-## ejs-brunch
+## ejs-brunch [![Build Status](https://travis-ci.org/munshkr/ejs-brunch.svg?branch=master)](https://travis-ci.org/munshkr/ejs-brunch)
 
 Adds [Embedded Javascript template (EJS)](https://github.com/mde/ejs)
 compilation support to [brunch](http://brunch.io).
