@@ -29,7 +29,7 @@ Install the plugin via npm with `npm install --save ejs-brunch`.
 
 Or, do manual install:
 
-* Add `"ejs-brunch": "~x.y.z"` to `package.json` of your brunch app.
+* Add `"ejs-brunch": "~1.0.1"` to `package.json` of your brunch app.
 * If you want to use git version of plugin, use the GitHub URI
 `"ejs-brunch": "munshkr/ejs-brunch"`.
 

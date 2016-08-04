@@ -1,6 +1,6 @@
 {
   "name": "ejs-brunch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Adds EJS compilation support to Brunch",
   "author": "Damián Silvani (@munshkr)",
   "homepage": "https://github.com/munshkr/ejs-brunch",
