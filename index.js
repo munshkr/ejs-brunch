@@ -9,10 +9,44 @@ class EjsPlugin {
 
   // file: File => Promise[File]
   // Generates a compilation function from a EJS template string
-  compile(file) {
+  compile(params) {
+    var data = params.data;
+    var path = params.path;
+
+    // TODO Make client configurable
+    var options = {
+      client: true,
+      filename: path
+    };
+
     try {
-      var fn = ejs.compile(file.data);
-      return Promise.resolve({template: fn});
+      // Generate compile function
+      var fn = ejs.compile(data, options);
+
+      // Return a callable function which will execute the function
+      // created by the source-code, with the passed data as locals
+      // Add a local `include` function which uses require to load files
+      var returnedFn = function(data) {
+        var include = function(path, includeData) {
+          var _fn = require(path);
+          return _fn(includeData);
+        };
+        return fn(data, null, include);
+      };
+
+      var module = 'var fn = ' + fn + ';\n' +
+        'var __module = ' + returnedFn + ';\n' +
+        'if (typeof define === \'function\' && define.amd) {\n' +
+        '  define([], function() {\n' +
+        '    return __module;\n' +
+        '  });\n' +
+        '} else if (typeof module === \'object\' && module && module.exports) {\n' +
+        '  module.exports = __module;\n' +
+        '} else {\n' +
+        '  __module;\n' +
+        '}';
+
+      return Promise.resolve(module);
     } catch (error) {
       return Promise.reject(error);
     }
