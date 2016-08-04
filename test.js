@@ -32,13 +32,14 @@ describe('Plugin', () => {
   });
 
   it('should define an include function', function(done) {
-    var require = function(_path) {
+    var require = function(path) {
+      expect(path).to.equal("views/item");
       return function(data) { return "<span>" + data.bar + "</span>" };
     };
-    var content  = '<p><%- include("foo", { bar: 1 }) %></p>';
+    var content  = '<p><%- include("item", { bar: 1 }) %></p>';
     var expected = '<p><span>1</span></p>';
 
-    plugin.compile({data: content}).then(module => {
+    plugin.compile({path: 'app/views/index', data: content}).then(module => {
       try {
         var tpl = eval(module);
         expect(tpl()).to.equal(expected);

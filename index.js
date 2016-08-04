@@ -1,36 +1,47 @@
 'use strict';
 
 var ejs = require('ejs');
+var path = require('path');
 
 class EjsPlugin {
   constructor(config) {
-    this.config = config && config.plugins && config.plugins.plugin;
+    this.config = config && config.plugins && config.plugins.ejs || {};
+    this.config = Object.assign(this.config, {
+      watched: config && config.paths && config.paths.watched || ['app', 'test', 'vendor']
+    });
+  }
+
+  _basePath(filePath) {
+    var parts = filePath.split(path.sep);
+    var baseDir = this.config.watched.find(d => parts.includes(d));
+    var relPath = path.relative(baseDir, filePath);
+    return relPath && `${path.dirname(relPath)}/`;
   }
 
   // file: File => Promise[File]
   // Generates a compilation function from a EJS template string
   compile(params) {
-    // TODO Make client configurable
-    var options = {
-      client: true
-    };
+    var options = {client: true};
 
     try {
+      var basePath = params.path && this._basePath(params.path);
+
       // Generate compile function
       var fn = ejs.compile(params.data, options);
 
       // Return a callable function which will execute the function
       // created by the source-code, with the passed data as locals
       // Add a local `include` function which uses require to load files
-      var returnedFn = function(data) {
-        var include = function(includePath, includeData) {
-          var _fn = require(includePath);
+      var returnedFn = data => {
+        var include = (includePath, includeData) => {
+          var _fn = require(basePath + includePath);
           return _fn(includeData);
         };
         return fn(data, null, include);
       };
 
-      var module = 'var fn = ' + fn + ';\n' +
+      var module = 'var basePath = ' + JSON.stringify(basePath) + ';\n' +
+        'var fn = ' + fn + ';\n' +
         'var __module = ' + returnedFn + ';\n' +
         'if (typeof define === \'function\' && define.amd) {\n' +
         '  define([], function() {\n' +
@@ -44,6 +55,7 @@ class EjsPlugin {
 
       return Promise.resolve(module);
     } catch (error) {
+      console.error(error);
       return Promise.reject(error);
     }
   }
