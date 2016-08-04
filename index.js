@@ -1,6 +1,6 @@
 'use strict';
 
-const ejs = require('ejs');
+var ejs = require('ejs');
 
 class EjsPlugin {
   constructor(config) {
@@ -10,10 +10,9 @@ class EjsPlugin {
   // file: File => Promise[File]
   // Generates a compilation function from a EJS template string
   compile(file) {
-    let template;
     try {
-      template = ejs.compile(file.data);
-      return Promise.resolve({template});
+      var fn = ejs.compile(file.data);
+      return Promise.resolve({template: fn});
     } catch (error) {
       return Promise.reject(error);
     }

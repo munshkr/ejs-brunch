@@ -1,8 +1,8 @@
-const expect = require('chai').expect;
-const Plugin = require('./');
+var expect = require('chai').expect;
+var Plugin = require('./');
 
 describe('Plugin', () => {
-  let plugin;
+  var plugin;
 
   beforeEach(() => {
     plugin = new Plugin({});
@@ -17,8 +17,8 @@ describe('Plugin', () => {
   });
 
   it('should compile and produce valid result', function(done) {
-    const content  = '<p><%= "hello, world!".toUpperCase() %> <%= locals.var %></p>';
-    const expected = '<p>HELLO, WORLD! foo</p>';
+    var content  = '<p><%= "hello, world!".toUpperCase() %> <%= locals.var %></p>';
+    var expected = '<p>HELLO, WORLD! foo</p>';
 
     plugin.compile({data: content}).then(module => {
       try {
