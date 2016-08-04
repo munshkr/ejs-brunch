@@ -11,7 +11,7 @@ Or, do manual install:
 
 * Add `"ejs-brunch": "~x.y.z"` to `package.json` of your brunch app.
 * If you want to use git version of plugin, use the GitHub URI
-`"ejs-brunch": "brunch/ejs-brunch"`.
+`"ejs-brunch": "munshkr/ejs-brunch"`.
 
 ## License
 
