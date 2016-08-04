@@ -44,7 +44,7 @@ You can use the `include()` local function in your templates:
 
 ```html
 <!-- in 'app/foo.html.ejs' -->
-<li id="<%= id %>"><%- include('item', { id: id, name: name } %></li>
+<li id="<%= id %>"><%- include('item', { id: id, name: name }) %></li>
 
 <!-- in 'app/item.html.ejs' -->
 <span><%= name.toUpperCase() %> (<%= id %>)</span>
