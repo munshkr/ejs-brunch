@@ -13,9 +13,9 @@ class EjsPlugin {
 
   _basePath(filePath) {
     var baseDir;
-    this.config.watched.forEach( (d) => {
-      if (filePath.indexOf(d) == 0) {
-        baseDir = filePath.replace(d, "");
+    this.config.watched.forEach(d => {
+      if (filePath.indexOf(d) === 0) {
+        baseDir = d;
       }
     });
     var relPath = path.relative(baseDir, filePath);
