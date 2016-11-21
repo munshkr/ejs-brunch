@@ -12,8 +12,12 @@ class EjsPlugin {
   }
 
   _basePath(filePath) {
-    var parts = filePath.split(path.sep);
-    var baseDir = this.config.watched.find(d => parts.indexOf(d) > -1);
+    var baseDir;
+    this.config.watched.forEach(d => {
+      if (filePath.indexOf(d) === 0) {
+        baseDir = d;
+      }
+    });
     var relPath = path.relative(baseDir, filePath);
     return relPath && `${path.dirname(relPath)}/`;
   }
