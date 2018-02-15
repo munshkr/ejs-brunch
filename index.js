@@ -13,7 +13,7 @@ class EjsPlugin {
 
   _basePath(filePath) {
     var baseDir;
-    this.config.watched.forEach(d => {
+    this.config.watched.forEach(function(d) {
       if (filePath.indexOf(d) === 0) {
         baseDir = d;
       }
@@ -36,8 +36,8 @@ class EjsPlugin {
       // Return a callable function which will execute the function
       // created by the source-code, with the passed data as locals
       // Add a local `include` function which uses require to load files
-      var returnedFn = data => {
-        var include = (includePath, includeData) => {
+      var returnedFn = function(data) {
+        var include = function(includePath, includeData) {
           var _fn = require(basePath + includePath);
           return _fn(includeData);
         };
